@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#other files
+exploration.ipynb_checkpoints
+exploration.ipynb
+create_5_year_df.py
+data
