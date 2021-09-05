@@ -1,15 +1,9 @@
-from dotenv import load_dotenv
-import os
-load_dotenv()
-
 class FA_dataset():
-
     def __init__(self,api_key,ticker):
         self.api_key = api_key
         self.ticker = ticker
+        self.df_save_path = f'data/{ticker}_7_Years.csv'
    
-    
-    def create_df(self):
         import FundamentalAnalysis as fa
         import pandas as pd
         
@@ -79,7 +73,7 @@ class FA_dataset():
         df['eps'] = eps
         df['number_of_shares'] = number_of_shares
         df['dividends'] = dividends
-        df['capital_expenditures'] = capital_expenditures
+        df['capital_expenditures'] = -capital_expenditures
         df['stock_repurchased'] = stock_repurchased
         df['debt_repayment'] = debt_repayment
         df['free_cash_flow'] = free_cash_flow
@@ -89,11 +83,22 @@ class FA_dataset():
         df['propery_and_plant_investments'] = property_and_plant_investments
 
         #save dataframe
-        df.to_csv(f'data/{ticker}_5Years.csv')
+        df.to_csv(f'data/{ticker}_7_Years.csv')
         print(df)
-        print(f'Created df: data/{ticker}_5Years.csv')
-        return 
+        print(f'Created df: data/{ticker}_7_Years.csv')
+        return
+  
+    def plot_metrics(self):
+        import plotly.express as px
+        import pandas as pd
+        metrics = ['net_income','operating_income','number_of_shares','revenue','capital_expenditures','total_stockholders_equity']
+        df = pd.read_csv(self.df_save_path)
+        df.rename(columns={'Unnamed: 0':'year'},inplace=True)
 
-api_key = os.getenv('FIN_API')
-z = FA_dataset(api_key,'LGND')
-z.create_df()
+        fig = px.line(title=self.ticker)
+
+        for metric in metrics:
+            fig.add_scatter(x = df['year'], y = df[metric] , name = metric)
+
+        fig.show()
+        return 
