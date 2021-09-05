@@ -101,4 +101,4 @@ class FA_dataset():
             fig.add_scatter(x = df['year'], y = df[metric] , name = metric)
 
         fig.show()
-        return 
+        #return fig
