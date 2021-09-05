@@ -19,10 +19,11 @@ def plotter():
     if request.method == 'POST':
         ticker = request.form['ticker']
         ticker = ticker.upper()
-        
+
+
         #create FAA object and convert to plot
         FAA_figure = FA_dataset(api_key,ticker).plot_metrics()
-        plotly.offline.plot(FAA_figure,filename='templates/plot.html',auto_open=False)
-    return render_template('plot.html')
+        plotly.offline.plot(FAA_figure,filename=f'templates/View_{ticker}_plot.html',auto_open=False)
+    return render_template(f'View_{ticker}_plot.html')
 if __name__ == '__main__':
     app.run()
