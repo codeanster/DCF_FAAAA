@@ -95,10 +95,10 @@ class FA_dataset():
         df = pd.read_csv(self.df_save_path)
         df.rename(columns={'Unnamed: 0':'year'},inplace=True)
 
-        fig = px.line(title=self.ticker)
+        fig = px.line(title=f"{self.ticker} Metrics Plot")
 
         for metric in metrics:
             fig.add_scatter(x = df['year'], y = df[metric] , name = metric)
 
-        fig.show()
-        #return fig
+        #fig.show()
+        return fig

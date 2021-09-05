@@ -12,16 +12,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return render_template('index.html')
+    return render_template('base.html')
 
 @app.route('/display_metrics',methods=['POST'])
 def plotter():
     if request.method == 'POST':
         ticker = request.form['ticker']
+        ticker = ticker.upper()
         
         #create FAA object and convert to plot
         FAA_figure = FA_dataset(api_key,ticker).plot_metrics()
-  
-    return render_template('index.html')
+        plotly.offline.plot(FAA_figure,filename='templates/plot.html',auto_open=False)
+    return render_template('plot.html')
 if __name__ == '__main__':
     app.run()
