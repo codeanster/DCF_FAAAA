@@ -14,7 +14,7 @@ app = Flask(__name__)
 def main():
     return render_template('base.html')
 
-@app.route('/display_metrics',methods=['POST'])
+@app.route('/display_metrics',methods=['GET','POST'])
 def plotter():
     if request.method == 'POST':
         ticker = request.form['ticker']
